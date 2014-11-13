@@ -1,0 +1,108 @@
+﻿@using CeniraBiblioteca.Models
+@model IEnumerable<Category>
+
+@{
+    ViewBag.Title = "Biblioteca Cenira";
+}
+
+@section estilos{
+    <style>
+        .cursor-pointer{
+            cursor:pointer;
+        }
+    </style>
+}
+
+<div class="jumbotron">
+    <br /><br />
+    <div class="container">
+        <h2>¡Hola, bienvenido a CENIRA <small>beta</small>!</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut dictum tellus, eget tincidunt diam. Praesent tincidunt tristique accumsan. In ultricies nunc vitae massa ullamcorper commodo.</p>
+    </div>
+    <br /><br />
+</div>
+
+<div class="jumbotron blue-color">
+    <div class="container">
+        <h2 class="text-center">¿Buscas algún libro?</h2>
+        <div class="col-md-6 text-center">
+            <p>Busca uno en específico</p>
+            @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+            {
+                <div class="input-group input-group-lg col-lg-6 col-lg-offset-3" >
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control", placeholder = "Buscar" })
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                    </span>
+                </div>
+            }
+        </div>
+        <div class="col-md-6 text-center">
+            <p>O busca por categorías</p>
+            <a id="categories" href="#categories" class="btn btn-default btn-lg">Ir a Categorias</a>
+        </div>
+    </div>
+    <br />
+    <br />
+</div>
+@if (Model.Count() > 1)
+{
+    <div class="jumbotron another-color">
+        <a name="categories"></a>
+        <div class="slider slick-carousel">
+            @foreach (Category cat in Model)
+            {
+                // muestra una modal de bootstrap con datos de un libro
+                <div>
+                    <div class="container">                        
+                        <h2 class="text-center">@Html.ActionLink(@cat.CategoryName, "Search", new { category = @cat.CategoryName }, new { @class = "link-no-decorado" })</h2>
+                        <br>
+                        <div class="col-md-2 col-md-offset-2 cursor-pointer open-bookModal" data-toggle="modal" data-url="@Url.Action("GetBook", new { id = cat.Books.First().BookID })"><img src="@cat.Books.First().ImageURL" class="img-responsive img-rounded" /></div>
+                        @foreach (Book book in cat.Books.Skip(1).Take(3).ToList())
+                        {
+                            <div class="col-md-2 cursor-pointer open-bookModal" data-toggle="modal" data-url="@Url.Action("GetBook", new { id = book.BookID })"><img src="@book.ImageURL" class="img-responsive img-rounded" /></div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+<!-- Modal -->
+<div class="modal fade"  id="bookModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">            
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.slick-carousel').slick({
+                autoplay: true,
+                autoplaySpeed: 5000
+            });
+
+            $("#categories").click(function (e) {
+                e.preventDefault();
+                scrollToAnchor('categories');
+            });            
+        });
+
+        $(document).on("click", ".open-bookModal", function () {
+            var url = $(this).data('url');
+
+            $.get(url, function (data) {
+                $('.modal-content').html(data);
+                $('#bookModal').modal('show');
+            });
+        });
+
+        function scrollToAnchor(aid) {
+            var aTag = $("a[name='" + aid + "']");
+            $('html,body').animate({ scrollTop: aTag.offset().top }, 'slow');
+        }
+    </script>
+
+}

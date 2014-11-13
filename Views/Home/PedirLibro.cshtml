@@ -1,0 +1,36 @@
+﻿@model CeniraBiblioteca.Models.Pedidos
+
+@{
+    ViewBag.Title = "Pedir Libro";
+}
+
+<div class="jumbotron another-blue-color">
+    <div class="container">
+        <h2>Procesar pedido</h2>
+        <hr />
+
+        @using (Html.BeginForm("PedirLibro", "Home"))
+        {
+            @Html.ValidationSummary()
+
+            @Html.HiddenFor(b => b.ID)
+            @Html.HiddenFor(b => b.BookID)
+
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(b => b.Nombre)</label>
+                @Html.TextBoxFor(b => b.Nombre, null, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(b => b.Apellido)</label>
+                @Html.TextBoxFor(b => b.Apellido, null, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(b => b.Cedula)</label>
+                @Html.TextAreaFor(b => b.Cedula, 4, 1, new { @class = "form-control" })
+            </div>
+
+            <input type="submit" value="Enviar" class="btn btn-primary" />
+        }
+    </div>
+</div>
+

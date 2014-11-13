@@ -1,0 +1,77 @@
+﻿@model CeniraBiblioteca.Models.BookViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+@section estilos{
+    <style>
+        textarea{
+            resize: none;
+        }
+    </style>
+}
+<div class="col-md-6">
+    <div class="content-box-header">
+        <div class="panel-title">Editar</div>
+    </div>
+    <div class="content-box-large box-with-header">
+        @using (Html.BeginForm("EditBook", "Admin"))
+        {
+            @Html.ValidationSummary()
+            
+            @Html.HiddenFor(b => b.book.BookID)
+            
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(b => b.book.Name)</label>
+                @Html.TextBoxFor(b => b.book.Name, null, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(b => b.book.Author)</label>
+                @Html.TextBoxFor(b => b.book.Author, null, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(b => b.book.Description)</label>
+                @Html.TextAreaFor(b => b.book.Description, 4, 1, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(b => b.book.Publisher)</label>
+                @Html.TextBoxFor(b => b.book.Publisher, null, new { @class = "form-control" })
+            </div>            
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(b => b.book.Pages)</label>
+                @Html.TextBoxFor(b => b.book.Pages, null, new { @class = "form-control" })
+            </div>            
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(b => b.book.DatePublished)</label>
+                @Html.TextBoxFor(b => b.book.DatePublished, null, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(b => b.book.Edition)</label>
+                @Html.TextBoxFor(b => b.book.Edition, null, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(b => b.book.Category)</label>
+                @if (ViewBag.Create)
+                {
+                    @Html.DropDownList("category", new SelectList(Model.categories), "Seleccionar Categoria", new { @class = "form-control" })
+                }
+                else 
+                {                    
+                    @Html.DropDownList("category", new SelectList(Model.categories, @Model.book.Category.CategoryName), new { @class = "form-control" })
+                }
+            </div>
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(b => b.book.ImageURL)</label>
+                @Html.TextBoxFor(b => b.book.ImageURL, null, new { @class = "form-control" })
+            </div>
+            
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(b => b.book.Status)</label>
+                @Html.DropDownListFor(b => b.book.Status, new SelectList(Enum.GetNames(typeof(CeniraBiblioteca.Models.BookStatus))))
+            </div>
+            
+            <input type="submit" value="Guardar" class="btn btn-primary"/>
+            @Html.ActionLink("Cancelar y volver a la lista", "Libros", null, new { @class = "btn btn-default" })
+        }
+    </div>
+</div>

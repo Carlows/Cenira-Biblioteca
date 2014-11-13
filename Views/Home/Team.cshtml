@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Nuestro Equipo";
+}
+
+<div class="jumbotron another-blue-color">
+    <div class="container">
+        <h2>Team</h2>
+        <hr />
+        <p>Developed by <strong>Carlos Martinez</strong></p>
+        <hr />
+        <div id="information">
+            <div class="col-md-4">
+                <img src="https://avatars2.githubusercontent.com/u/4183514?s=200" id="profileImg" class="img-responsive img-circle col-md-offset-2">
+            </div>
+            <div class="col-md-4">
+                <label><i>StackOverflow</i> Profile</label>
+                <a href="http://stackoverflow.com/users/2958713/carlos-martinez">
+                    <img src="http://stackoverflow.com/users/flair/2958713.png" width="208" height="58" alt="profile for Carlos Martinez at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for Carlos Martinez at Stack Overflow, Q&amp;A for professional and enthusiast programmers">
+                </a>
+                <hr />
+                <label>Twitter:</label><br />
+                <a href="https://twitter.com/ImNOTCarlosM" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @@ImNOTCarlosM</a>
+                <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#information').hide();
+
+            $('#information').show('slow', function () {
+                $('#profileImg').fadeIn('slow');
+            })
+        });
+    </script>
+
+}

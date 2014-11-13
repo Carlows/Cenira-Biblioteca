@@ -1,0 +1,18 @@
+﻿.navbar{ 
+    margin-bottom: 0;
+} 
+.jumbotron{  
+    margin-bottom: 0;
+} 
+.blue-color{  
+    background-color:#375a7f; 
+} 
+.another-blue-color{ 
+    background-color:#333333; 
+} 
+.link-no-decorado{
+    color:#ffffff;
+}
+.link-no-decorado:hover{
+    text-decoration:none;
+}
